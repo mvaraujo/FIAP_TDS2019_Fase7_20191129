@@ -4,6 +4,8 @@
 
 A partir de uma foto, verifica se é uma placa de rua e abre o Google Maps com o endereço da placa
 
+Antes de mais nada, `npm install`, por favor :-)
+
 - Rodar localmente no browser
 
   ```
