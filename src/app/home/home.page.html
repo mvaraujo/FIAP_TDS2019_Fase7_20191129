@@ -4,19 +4,13 @@
       Exemplo do Google Cloud Vision
     </ion-title>
   </ion-toolbar>
-  </ion-header>
-  
-  <ion-content padding>
-  <button ion-button full (click)="tirarFoto()">Tirar foto</button>
-  
-  <ion-card *ngIf="imagem">
-    <img [src]="imagem">
-   
-    <ion-card-content>
-        <p *ngFor="let resultado of resultados">
-          {{ resultado.description }} - Há {{ verificarPrecisao(resultado.score) }}% de precisão.
-        </p>
-        <p></p>
-    </ion-card-content>
-  </ion-card>
+</ion-header>
+
+<ion-content padding>
+  <ion-content text-center style="height: 75%" *ngIf="imagem">
+    <img [src]="imagem" style="height:100%; width:auto;">
   </ion-content>
+  <ion-button expand="block" color="primary" (click)="tirarFoto()" *ngIf="!imagem">Tirar foto</ion-button>
+  <ion-button expand="block" color="primary" (click)="localizarEndereco()" *ngIf="imagem && hasStreetSign">Localizar endereço</ion-button>
+  <ion-button expand="block" color="medium" (click)="limpar()" *ngIf="imagem">Voltar</ion-button>
+</ion-content>
