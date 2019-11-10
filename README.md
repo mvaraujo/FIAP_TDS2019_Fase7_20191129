@@ -1,6 +1,14 @@
+# Formação em TDS/FIAP 2019
+
+## Entrega para tarefa de 11/nov/2019 da Fase 7
+
+A partir de uma foto, verifica se é uma placa de rua e abre o Google Maps com o endereço da placa
+
 - Rodar localmente no browser
 
-        ng serve
+  ```
+  ng serve
+  ```
 
 - Rodar no emulador ou no celular
 
