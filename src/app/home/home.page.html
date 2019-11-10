@@ -10,7 +10,11 @@
   <ion-content text-center style="height: 75%" *ngIf="imagem">
     <img [src]="imagem" style="height:100%; width:auto;">
   </ion-content>
-  <ion-button expand="block" color="primary" (click)="tirarFoto()" *ngIf="!imagem">Tirar foto</ion-button>
+  <div *ngIf="imagem && hasStreetSign === false">
+    <p>Isso não parece uma placa de rua!</p>
+    <p>Por favor, tente de novo</p>
+  </div>
+  <ion-button expand="block" color="primary" (click)="tirarFoto()" *ngIf="!imagem || hasStreetSign === false">Tirar foto</ion-button>
   <ion-button expand="block" color="primary" (click)="localizarEndereco()" *ngIf="imagem && hasStreetSign">Localizar endereço</ion-button>
   <ion-button expand="block" color="medium" (click)="limpar()" *ngIf="imagem">Voltar</ion-button>
 </ion-content>

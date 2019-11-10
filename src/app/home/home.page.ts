@@ -51,10 +51,10 @@ export class HomePage {
 
     this.camera.getPicture(options)
       .then(imagemDados => {
-        this.imagem = imagemDados;
+        this.imagem = 'data:image/jpeg;base64,' + imagemDados;
 
         return {
-          content: this.imagem
+          content: imagemDados
         };
       })
       .catch(error => {
@@ -125,7 +125,7 @@ export class HomePage {
           ];
 
           for (const labelAnnotation of result.responses[0].labelAnnotations) {
-            if (streetSignDescriptions.some(d => labelAnnotation.description)) {
+            if (streetSignDescriptions.some(d => d === labelAnnotation.description)) {
               this.hasStreetSign = true;
               this.address =
                 result.responses[0]
