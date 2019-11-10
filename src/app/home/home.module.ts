@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
@@ -16,7 +18,11 @@ import { HomePage } from './home.page';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsAPIKey,
+      libraries: ['places']
+    })
   ],
   declarations: [HomePage]
 })

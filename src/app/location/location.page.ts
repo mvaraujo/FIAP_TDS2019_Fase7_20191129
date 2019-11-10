@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
-declare var google;
+import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-location',
@@ -8,24 +7,29 @@ declare var google;
   styleUrls: ['./location.page.scss'],
 })
 export class LocationPage implements OnInit {
-  map: any;
+  latitude: number;
+  longitude: number;
+  zoom: number;
 
-  constructor() { }
+  @ViewChild('search', { static: false })
+  public searchElementRef: ElementRef;
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    const position = new google.maps.LatLng(-21.763409, -43.349034);
-
-    const mapOptions = {
-      zoom: 18,
-      center: position,
-      disableDefaultUI: true
-    }
-
-    this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    this.activatedRoute.params.subscribe(
+      params => {
+        this.latitude = +params.latitude;
+        this.longitude = +params.longitude;
+        this.zoom = 18;
+      }
+    );
   }
 
-  private getMapa() {
-    return 'https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=400x400&markers=color:red|RUA 540 BENTO DE São Bento SE-Sé CEP 01011-100 Rua São Bento 323 a 413 FOTO POR GCalixto&key=AIzaSyBLNjgYqCgkbLFNo5vsr-2m9vb7Yp6zz8g'
+  limpar() {
+    this.router.navigate(['/home']);
   }
-
 }

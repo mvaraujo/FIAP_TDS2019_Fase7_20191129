@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Http, Headers, RequestOptions, HttpModule } from '@angular/http';
+import { Headers, HttpModule } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { AnnotateImageResponse, EntityAnnotation } from '@datafire/google_vision';
+import { AnnotateImageResponse } from '@datafire/google_vision';
 import 'rxjs/add/operator/finally';
 import { Router } from '@angular/router';
+import { MapsAPILoader } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -18,12 +20,12 @@ export class HomePage {
   hasStreetSign: boolean;
   address: string;
   loading: any;
+  private geoCoder;
 
   constructor(
     private loadingCtrl: LoadingController,
     private camera: Camera,
-    // tslint:disable-next-line: deprecation
-    private http: HttpModule,
+    private mapsAPILoader: MapsAPILoader,
     private router: Router,
     private httpClient: HttpClient
   ) { }
@@ -69,16 +71,30 @@ export class HomePage {
           throw error;
         }
       })
-      .then(imageRequest => {
+      .then(async imageRequest => {
         this.presentLoading();
+
+        await this.loadMapsAPI();
 
         return this.requisicaoParaAPI(imageRequest);
       });
   }
 
+  private async loadMapsAPI() {
+    const result =
+      this.mapsAPILoader
+        .load()
+        .then(
+          () => {
+            this.geoCoder = new google.maps.Geocoder();
+          }
+        );
+
+    return result;
+  }
+
   private requisicaoParaAPI(imageRequest) {
-    const apiKey = 'AIzaSyBLNjgYqCgkbLFNo5vsr-2m9vb7Yp6zz8g';
-    const url = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
+    const url = `https://vision.googleapis.com/v1/images:annotate?key=${environment.googleCloudVisionAPIKey}`;
     const request = {
       requests: [
         {
@@ -95,9 +111,6 @@ export class HomePage {
         }
       ]
     }
-
-    // tslint:disable-next-line: deprecation
-    const headers = new Headers({ 'Content-Type': 'application/json' });
 
     this.httpClient
       .post(url, request)
@@ -127,8 +140,19 @@ export class HomePage {
       );
   }
 
-  localizarEndereco(){
-    this.router.navigate(['/location', '']);
+  localizarEndereco() {
+    this.geoCoder.geocode(
+      { address: this.address }, (results, status) => {
+        if (status === 'OK') {
+          if (results[0]) {
+            this.router.navigate(['/location', results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
+          } else {
+            window.alert('No results found');
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);
+        }
+      });
   }
 
   limpar() {
