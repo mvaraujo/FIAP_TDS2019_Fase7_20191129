@@ -60,7 +60,7 @@ export class HomePage {
       .catch(error => {
         if (error === 'cordova_not_available') {
           // Dummy when cordova not available
-          this.imagem = 'https://saopauloesuasruas.files.wordpress.com/2015/05/placa-rua-s-bento.jpg';
+          this.imagem = 'https://c8.alamy.com/comp/P420BC/bairro-moema-sp-placa-placa-de-avenida-placa-de-avenida-jacutinga-placa-de-rua-de-so-paulo-bairro-moema-so-paulo-brasil-sudeste-placa-com-nome-de-ave-P420BC.jpg';
 
           return {
             source: {
