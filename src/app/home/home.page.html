@@ -6,10 +6,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-content text-center style="height: 75%" *ngIf="imagem">
+<ion-content>
+  <div text-center style="height: calc(100% - (36px + 4px * 2) * 2);" *ngIf="imagem">
     <img [src]="imagem" style="height:100%; width:auto;">
-  </ion-content>
+  </div>
   <div *ngIf="imagem && hasStreetSign === false">
     <p>Isso não parece uma placa de rua!</p>
     <p>Por favor, tente de novo</p>

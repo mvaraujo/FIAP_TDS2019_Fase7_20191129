@@ -145,7 +145,19 @@ export class HomePage {
       { address: this.address }, (results, status) => {
         if (status === 'OK') {
           if (results[0]) {
-            this.router.navigate(['/location', results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
+            const address_components = results[0].address_components;
+
+            const rua = address_components.filter(a => a.types.some(t => t == "route"))[0].short_name;
+            const bairro =  address_components.filter(a => a.types.some(t => t == "administrative_area_level_4"))[0].short_name;
+            const cidade =  address_components.filter(a => a.types.some(t => t == "administrative_area_level_2"))[0].short_name;
+            const estado =  address_components.filter(a => a.types.some(t => t == "administrative_area_level_1"))[0].short_name;
+            const pais =  address_components.filter(a => a.types.some(t => t == "country"))[0].short_name;
+            const cep =  address_components.filter(a => a.types.some(t => t == "postal_code"))[0].short_name;
+
+            const lat = results[0].geometry.location.lat();
+            const lng = results[0].geometry.location.lng();
+
+            this.router.navigate(['/location', rua, bairro, cidade, estado, pais, cep, lat, lng]);
           } else {
             window.alert('No results found');
           }

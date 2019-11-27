@@ -1,0 +1,291 @@
+Administrativo
+
+
+Login: POST /api/auth/login/admin
+Input (body): 
+{
+    "email": "",
+    "password": ""
+}
+
+Output: 
+200
+{
+    "accessToken": "",
+    "tokenType": "",
+    "expiresIn" : <long> 
+}
+
+Propriedades - Cadastro : POST /api/propriedade
+Input (body): Mandar imagem convertida pra base 64
+{
+    "nome": "",
+    "descricao": "",
+    "emailDono": "",
+    "valorTotal": 66000.2,
+    "area": 500.2,
+    "estado" : "",
+    "cidade" : "",
+    "bairro" : "",
+    "rua" : "",
+    "nº" : "",
+    "complemento" : "",
+    "metro": true,
+    "pet": true,
+    "garagem": true,
+    "piscina": true,
+    "academia": true,
+    "foto" : "base64",
+     "tipo":   1,  /*1 = Comprar, 2 = Alugar */
+     "classificacao":   1  /*1 = Apartamento, 2 = Casa */,
+}
+
+Output:
+200 //Sem corpo
+
+
+
+Propriedades - Listagem : GET /api/propriedade?paginaAtual=1&apenasAtivas=true 
+Input (query string)
+ paginaAtual = 1 (minimo 1, maximo é o valor do campo "totalPaginas", se passar do maximo retorna o array vazio)
+inputs opcionais:
+ apenasAtivas = true (Mobile true, web false)
+ cidade = "string"
+ bairro = "string"
+ rua = "string"
+ valorMin = 20,
+ valorMax = 400,
+ tipo = 1, /*1 = Comprar, 2 = Alugar */
+ classificacao = 1, /*1 = Apartamento, 2 = Casa */
+
+Output: 200
+{
+    "data": [
+        {
+            "id": 1,
+            "ativa": true, //Ao cadastrar, pro padrao é ativa (no mobile só vão aparecer propriedades ativas)
+            "nome": "Imovel 1 dessa pagina",
+            "descricao": "",
+            "emailDono": "",
+            "valorTotal": 66000.2,
+            "area": 500.2,
+            "estado" : "",
+            "cidade" : "",
+            "bairro" : "",
+            "rua" : "",
+            "nº" : "",
+            "complemento" : "",
+            "metro": true,
+            "pet": true,
+            "garagem": true,
+            "piscina": true,
+            "academia": true,
+            "foto" : "base64",
+            "tipo":   1,  /*1 = Comprar, 2 = Alugar */
+            "classificacao":   1  /*1 = Apartamento, 2 = Casa */
+        },
+        {
+            "id": 2,
+            "ativa": true, //Ao cadastrar, pro padrao é ativa (no mobile só vão aparecer propriedades ativas)
+            "nome": "Imovel 2 dessa pagina",
+            "descricao": "",
+            "emailDono": "",
+            "valorTotal": 66000.2,
+            "area": 500.2,
+            "estado" : "",
+            "cidade" : "",
+            "bairro" : "",
+            "rua" : "",
+            "nº" : "",
+            "complemento" : "",
+            "metro": true,
+            "pet": true,
+            "garagem": true,
+            "piscina": true,
+            "academia": true,
+            "foto" : "base64",
+            "tipo":   1,  /*1 = Comprar, 2 = Alugar */
+            "classificacao":   1  /*1 = Apartamento, 2 = Casa */
+        },
+    ],
+    "totalPaginas": 20,
+    "paginaAtual" : 2
+}
+
+
+
+Propriedades - Editar : PUT /api/propriedade    //MANDAR TODOS OS DADOS DA PROPRIEDADE, INCLUSIVE OS QUE NÃO MUDARAM
+Input (body): Mandar imagem convertida pra base 64
+{
+    "id": 2  //MANDAR O MESMO ID DA LISTAGEM, É ASSIM QUE EU SEI QUAL PROPRIEDADE ALTERAR,
+    "ativa": true,
+    "nome": "",
+    "descricao": "",
+    "emailDono": "",
+    "valorTotal": 66000.2,
+    "area": 500.2,
+    "estado" : "",
+    "cidade" : "",
+    "bairro" : "",
+    "rua" : "",
+    "nº" : "",
+    "complemento" : "",
+    "metro": true,
+    "pet": true,
+    "garagem": true,
+    "piscina": true,
+    "academia": true,
+    "foto" : "base64",
+     "tipo":   1,  /*1 = Comprar, 2 = Alugar */
+     "classificacao":   1  /*1 = Apartamento, 2 = Casa */
+}
+
+Output:
+200 //Sem corpo
+
+
+
+
+Propriedades - Ativar/Desativar : PUT /api/propriedade/{id}/ativar OU  /api/propriedade/{id}/desativar    
+Input:
+{id} = ID da propriedade (vem na listagem)
+Output:
+200 //Sem corpo
+
+
+
+
+Agendamentos - Listagem : GET /api/agendamento?paginaAtual=1&apenasFuturos=true
+Input (query string)
+paginaAtual = 1 (minimo 1, maximo é o valor do campo "totalPaginas", se passar do maximo retorna o array vazio)
+apenasFuturos = true (só agendamentos que ainda não começaram)
+
+Output: 200
+{
+    "data": [
+        {
+            "id": 1,
+            "propriedade": {
+                "id": 1,
+                "nome" : ""
+            },
+            "cliente":{
+                "id:" : 1,
+                "nome": "",
+                "telefone": ""
+            },
+            "data" : "11/20/2019 7:26:14 PM"
+        },
+         {
+            "id": 2,
+            "propriedade": {
+                "id": 1,
+                "nome" : ""
+            },
+            "cliente":{
+                "id:" : 1,
+                "nome": "",
+                "telefone": ""
+            },
+            "data" : "11/20/2019 7:56:14 PM"
+        },
+    ],
+    "totalPaginas": 20,
+    "paginaAtual" : 2
+}
+
+
+
+APP
+
+
+Login: POST /api/auth/login/app
+Input (body): 
+{
+    "email": "",
+    "password": ""
+}
+
+Output: 
+200
+{
+    "accessToken": "",
+    "tokenType": "",
+    "expiresIn" : <long> 
+}
+
+
+
+Cadastro: POST /api/auth/cadastro/app (loga automaticamente)
+Intput:
+{
+    "email": "",
+    "password": "",
+    "nome": "",
+    "telefone": ""
+}
+
+Output: 
+200
+{
+    "accessToken": "",
+    "tokenType": "",
+    "expiresIn" : <long> 
+}
+
+//Usar listagem de prorpiedades do web, mas só mostrando as ativas
+
+Pegar horarios disponíveis para agendamento no dia : Get /api/agendamento/horarios?data=22/10/2019
+Input:
+Data = 22/10/2019
+
+Output: 200 {
+    horarios: [
+        "11/20/2019 7:00:00 PM" //Mandar esse valor pra api quando for fazer agendamento,
+        "11/20/2019 8:00:00 PM" //Mandar esse valor pra api quando for fazer agendamento,
+    ]
+}
+
+Agendar: Post /api/agendamento
+Intput:
+{
+    "idPropriedade": 1,
+    "data" : "11/20/2019 7:56:14 PM"
+}
+Output: 
+200 
+
+
+Agendamentos do CLIENTE - Listagem : GET /api/agendamento/usuario?paginaAtual=1&apenasFuturos=false
+Input (query string)
+paginaAtual = 1 (minimo 1, maximo é o valor do campo "totalPaginas", se passar do maximo retorna o array vazio)
+apenasFuturos = false (só agendamentos que ainda não começaram)
+
+Output: 200
+{
+    "data": [
+        {
+            "id": 1,
+            "propriedade": {
+                "id": 1,
+                "nome" : ""
+                "endereco": "",
+                "imagem": "",
+            },
+            "data" : "11/20/2019 7:26:14 PM"
+        },
+         {
+           "id": 2,
+            "propriedade": {
+                "id": 1,
+                "nome" : ""
+                "endereco": "",
+                "imagem": "",
+            },
+            "data" : "11/20/2019 7:26:14 PM"
+        },
+    ],
+    "totalPaginas": 20,
+    "paginaAtual" : 2
+}
+

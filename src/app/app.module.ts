@@ -13,6 +13,8 @@ import { Http, HttpModule, ConnectionBackend, RequestOptions } from '@angular/ht
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { APIService } from '../services/api.service'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,8 +26,9 @@ import { AppRoutingModule } from './app-routing.module';
     Camera,
     // tslint:disable-next-line: deprecation
     HttpModule, Http, RequestOptions,
-    HttpClient
+    HttpClient,
+    APIService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
